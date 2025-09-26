@@ -35,8 +35,6 @@ public class McpProcessManagerService {
 		if (config.getWorkingDirectory() != null) {
 			builder.directory(Path.of(config.getWorkingDirectory()).toFile());
 		}
-		builder.redirectError(Redirect.INHERIT);
-		builder.redirectOutput(Redirect.INHERIT);
 		try {
 			Process process = builder.start();
 			runningServers.put(name, new RunningServer(process, Instant.now(), config, sourcePath));
@@ -64,7 +62,7 @@ public class McpProcessManagerService {
 		return runningServers.get(name);
 	}
 
-	private ProcessBuilder createProcessBuilder(McpServerConfig config) {
+	public ProcessBuilder createProcessBuilder(McpServerConfig config) {
 		if (config.getCommand() == null || config.getCommand().isBlank()) {
 			throw new IllegalArgumentException("Command is required to start an MCP server");
 		}

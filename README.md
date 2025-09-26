@@ -1,13 +1,13 @@
-# MCP Orchestrator (CLI-first)
+# MCP Orchestrator
 
-CLI-first Spring Boot application that orchestrates Model Context Protocol (MCP) servers from JSON configuration.
+Spring Boot application that orchestrates Model Context Protocol (MCP) servers from JSON configuration and exposes a REST API (with Swagger) to start/stop/connect/query MCP servers and interact with Ollama models.
 
 ## Overview
 
 - Loads one or more JSON configs with MCP server definitions (`command`, `args`, `env`, `workingDirectory`).
 - Starts each MCP server as an external process using `ProcessBuilder`.
-- Tracks running servers, allows connecting and sending prompts (stubbed for now).
-- Uses Spring Shell for CLI commands; services encapsulate logic for future REST API.
+- Tracks running servers, allows connecting and sending prompts.
+- Implements MCP protocol handshake and tool invocation (e.g., `execute_safe_query`) to retrieve real database data.
 
 ## Building
 
@@ -74,7 +74,7 @@ Conecta a um servidor rodando para interação.
 #### `POST /api/mcp/query`
 Envia um prompt ao servidor conectado.
 - **Parâmetros**: `prompt` - texto da consulta
-- **Resposta**: resposta do servidor MCP via Ollama
+- **Resposta**: para queries de dados, executa ferramentas MCP (ex.: `execute_safe_query`) e retorna o resultado real do banco; para perguntas gerais, responde via LLM configurado no Ollama
 
 #### Ollama Integration Endpoints:
 - **`GET /api/mcp/ollama/models`** - Lista modelos disponíveis no Ollama
@@ -98,17 +98,22 @@ Envia um prompt ao servidor conectado.
 ```
 br.lrferr.mcp
 ├── config
-│   ├── McpConfigurationProperties – binds `mcp.config.path` property.
-│   └── McpConfig – enables configuration properties.
+│   ├── McpConfigurationProperties – binds `mcp.config.path` property
+│   ├── McpConfig – enables configuration properties
+│   └── AppConfig – enables scheduling for session cleanup
+├── controller
+│   └── McpServerController – REST API (Swagger + MCP/Ollama)
 ├── model
-│   ├── McpConfiguration – root JSON structure.
-│   └── McpServerConfig – per-server config fields.
+│   ├── McpConfiguration – root JSON structure
+│   └── McpServerConfig – per-server config (command, args, env, capabilities)
 ├── service
-│   ├── McpConfigLoader – reads JSON via Jackson.
-│   ├── McpProcessManagerService – starts/stops processes, tracks running servers.
-│   └── McpClientService – manages current server connection (stub for MCP interactions).
-└── shell
-    └── McpShellCommands – Spring Shell CLI mapping to service layer.
+│   ├── McpConfigLoader – reads JSON via Jackson
+│   ├── McpProcessManagerService – starts/stops processes, tracks running servers
+│   ├── McpClientService – integrates Ollama + MCP sessions
+│   ├── mcp
+│   │   ├── McpSession, McpSessionManager, McpMessageFrame, McpHandshake, McpToolInvoker
+│   │   └── Exceptions utilitárias
+│   └── OllamaService – interage com Ollama API
 ```
 
 ## ProcessBuilder Example
@@ -127,9 +132,14 @@ builder.command("node", "./servers/oracle-monitor/index.js");
 builder.environment().putAll(config.getEnv());
 ```
 
-## Next Steps
+## Testing
 
-- Implement real MCP protocol client via Spring AI + MCP SDK.
-- Expand REST controllers and keep OpenAPI docs in sync.
-- Add automated tests (integration + CLI commands).
-- Integrate Playwright or equivalent tests for future frontend.
+```bash
+./mvnw -DskipTests package
+java -jar target/mcp-orchestrator-0.0.1-SNAPSHOT.jar
+```
+
+Endpoint workflow:
+1. `POST /api/mcp/start`
+2. `POST /api/mcp/oracle-monitor/connect`
+3. `POST /api/mcp/query?prompt=retorne os 5 primeiros registros da tabela frota.motorista`

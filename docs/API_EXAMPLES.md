@@ -1,14 +1,31 @@
-# MCP Orchestrator API - Ollama Integration Endpoints
+# MCP Orchestrator API - Data & Ollama Examples
 
-## Ollama Integration Module
+## 1. Querying Databases via MCP
 
-The project includes specific endpoints for checking and listing available Ollama models.
+Depois de conectar um servidor MCP (`POST /api/mcp/oracle-monitor/connect`), você pode enviar uma query:
+
+```bash
+POST /api/mcp/query?prompt=retorne os 5 primeiros registros da tabela frota.motorista
+```
+
+**Resposta típica:**
+
+```json
+{
+  "prompt": "retorne os 5 primeiros registros da tabela frota.motorista",
+  "response": "## ✅ Query Executed Successfully\n\n**Database**: oracle\n**SQL**: ```SELECT * FROM frota.motorista WHERE ROWNUM <= 5```\n\n{\n  \"rows\": [\n    { \"ID_MOTORISTA\": 174, \"APELIDO\": \"Kassab\" },\n    { \"ID_MOTORISTA\": 175, \"APELIDO\": \"Silva\" }\n  ],\n  \"metadata\": { \"count\": 2 }\n}"
+}
+```
+
+## 2. Ollama Integration Module
+
+O projeto inclui endpoints para verificar e listar modelos disponíveis no Ollama.
 
 > **📚 Complete Documentation:** See [API_ENDPOINTS.md](API_ENDPOINTS.md) for full API documentation.
 
 ### Endpoints Adicionados:
 
-#### 1. **Listar Modelos do Ollama**
+#### 2.1 **Listar Modelos do Ollama**
 ```
 GET /api/mcp/ollama/models
 ```
@@ -40,7 +57,7 @@ GET /api/mcp/ollama/models
 }
 ```
 
-#### 2. **Obter Informações Detalhadas sobre um Modelo Específico**
+#### 2.2 **Obter Informações Detalhadas sobre um Modelo Específico**
 ```
 GET /api/mcp/ollama/models/{modelName}
 ```
@@ -67,7 +84,7 @@ GET /api/mcp/ollama/models/llama3:latest
 }
 ```
 
-#### 3. **Testar Conexão com Ollama**
+#### 2.3 **Testar Conexão com Ollama**
 ```
 GET /api/mcp/ollama/test-connection
 ```

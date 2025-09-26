@@ -140,7 +140,7 @@ POST /api/mcp/oracle-monitor/connect
 
 **Endpoint:** `POST /api/mcp/query`
 
-**Description:** Sends a prompt to the currently connected MCP server. The query is processed through Ollama LLM integration.
+**Description:** Sends a prompt to the currently connected MCP server. For data-related prompts the orchestrator routes the request through the MCP protocol, calling the server tools (e.g., `execute_safe_query`) to return real database results. For general prompts the request is answered via the configured Ollama model.
 
 **Query Parameters:**
 - `prompt`: Text prompt to send to the LLM
@@ -153,8 +153,8 @@ POST /api/mcp/query?prompt=Analyze Oracle database performance
 **Response Example:**
 ```json
 {
-  "response": "Oracle database analysis shows normal performance metrics. Current connection pools are at 85% capacity...",
-  "prompt": "Analyze Oracle database performance"
+  "prompt": "retorne os 5 primeiros registros da tabela frota.motorista",
+  "response": "## ✅ Query Executed Successfully\n\n**Database**: oracle\n**SQL**: ```SELECT * FROM frota.motorista WHERE ROWNUM <= 5```\n\n{\n  \"rows\": [\n    { \"ID_MOTORISTA\": 174, \"APELIDO\": \"Kassab\" },\n    { \"ID_MOTORISTA\": 175, \"APELIDO\": \"Silva\" }\n  ],\n  \"metadata\": { \"count\": 2 }\n}"
 }
 ```
 

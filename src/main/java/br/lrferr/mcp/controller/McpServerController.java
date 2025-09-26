@@ -160,30 +160,11 @@ public class McpServerController {
 			));
 		}
 		
-		try {
-			String response = clientService.query(prompt);
-			
-			// If response contains error indicators, return as error but with status 200 
-			// so it shows the user message clearly. 
-			if (response.startsWith("❌") && response.contains("ERROR") || response.contains("Communication Error")) {
-				return ResponseEntity.ok(Map.of(
-					"response", response,
-					"prompt", prompt,
-					"status", "error"
-				));
-			}
-			
-			return ResponseEntity.ok(Map.of(
-				"response", response,
-				"prompt", prompt
-			));
-		} catch (Exception e) {
-			Map<String, Object> errorResponse = new java.util.LinkedHashMap<>();
-			errorResponse.put("error", "Query execution failed: " + e.getMessage());
-			errorResponse.put("prompt", prompt);
-			errorResponse.put("troubleshooting", "Check Ollama status with GET /api/mcp/ollama/test-connection");
-			return ResponseEntity.internalServerError().body(errorResponse);
-		}
+		String response = clientService.query(prompt);
+		return ResponseEntity.ok(Map.of(
+			"response", response,
+			"prompt", prompt
+		));
 	}
 
 	// Ollama Endpoints

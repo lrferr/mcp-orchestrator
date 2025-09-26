@@ -3,6 +3,8 @@ package br.lrferr.mcp.model;
 import java.util.List;
 import java.util.Map;
 
+import com.fasterxml.jackson.databind.JsonNode;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -17,6 +19,9 @@ public class McpServerConfig {
 
 	@JsonProperty("workingDirectory")
 	private String workingDirectory;
+
+	@JsonProperty("capabilities")
+	private JsonNode capabilities;
 
 	public String getCommand() {
 		return command;
@@ -48,6 +53,14 @@ public class McpServerConfig {
 
 	public void setWorkingDirectory(String workingDirectory) {
 		this.workingDirectory = workingDirectory;
+	}
+
+	public JsonNode getCapabilities() {
+		return capabilities;
+	}
+
+	public void setCapabilities(JsonNode capabilities) {
+		this.capabilities = capabilities;
 	}
 }
 
