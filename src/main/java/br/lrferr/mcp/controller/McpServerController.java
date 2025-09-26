@@ -119,7 +119,7 @@ public class McpServerController {
 
 	@Operation(
 		summary = "Connect to Server", 
-		description = "Establishes connection to a running MCP server for sending queries. Required before using /query endpoint.")
+		description = "Establishes connection to a running MCP server for sending queries. Required before using /query endpoint. Use /list first to see available servers.")
 	@ApiResponses({
 		@ApiResponse(responseCode = "200", description = "Connected successfully"),
 		@ApiResponse(responseCode = "400", description = "Server not running")
@@ -160,11 +160,30 @@ public class McpServerController {
 			));
 		}
 		
-		String response = clientService.query(prompt);
-		return ResponseEntity.ok(Map.of(
-			"response", response,
-			"prompt", prompt
-		));
+		try {
+			String response = clientService.query(prompt);
+			
+			// If response contains error indicators, return as error but with status 200 
+			// so it shows the user message clearly. 
+			if (response.startsWith("❌") && response.contains("ERROR") || response.contains("Communication Error")) {
+				return ResponseEntity.ok(Map.of(
+					"response", response,
+					"prompt", prompt,
+					"status", "error"
+				));
+			}
+			
+			return ResponseEntity.ok(Map.of(
+				"response", response,
+				"prompt", prompt
+			));
+		} catch (Exception e) {
+			Map<String, Object> errorResponse = new java.util.LinkedHashMap<>();
+			errorResponse.put("error", "Query execution failed: " + e.getMessage());
+			errorResponse.put("prompt", prompt);
+			errorResponse.put("troubleshooting", "Check Ollama status with GET /api/mcp/ollama/test-connection");
+			return ResponseEntity.internalServerError().body(errorResponse);
+		}
 	}
 
 	// Ollama Endpoints
@@ -230,5 +249,57 @@ public class McpServerController {
 		} else {
 			return ResponseEntity.internalServerError().body(result);
 		}
+	}
+
+	@Operation(
+		summary = "Select Model", 
+		description = "Choose which Ollama model to use for queries. Check available models via /ollama/models first. You still need to connect to an MCP server using /{serverName}/connect")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200", description = "Model selected successfully"),
+		@ApiResponse(responseCode = "400", description = "Invalid model name")
+	})
+	@PostMapping("/ollama/select-model")
+	public ResponseEntity<Map<String, Object>> selectModel(
+			@Parameter(description = "Model name to select (e.g. llama3:latest, mistral:7b)")
+			@RequestParam String modelName) {
+		try {
+			// Verify model exists
+			if (!ollamaService.isModelAvailable(modelName)) {
+				Map<String, Object> errorResponse = new java.util.LinkedHashMap<>();
+				errorResponse.put("error", "Model '" + modelName + "' is not available");
+				errorResponse.put("suggestion", "Use GET /api/mcp/ollama/models to see available models");
+				errorResponse.put("hint", "Make sure Ollama is running and the model is downloaded");
+				return ResponseEntity.badRequest().body(errorResponse);
+			}
+			
+			clientService.setSelectedModel(modelName);
+			Map<String, Object> response = new java.util.LinkedHashMap<>();
+			response.put("message", "Model selected successfully");
+			response.put("selectedModel", modelName);
+			response.put("connectedServer", clientService.getCurrentServer().orElse(null));
+			response.put("modelValidated", true);
+			return ResponseEntity.ok(response);
+		} catch (IllegalArgumentException e) {
+			Map<String, Object> errorResponse = new java.util.LinkedHashMap<>();
+			errorResponse.put("error", e.getMessage());
+			errorResponse.put("suggestion", "Use a valid model name. Check available models at /ollama/models");
+			return ResponseEntity.badRequest().body(errorResponse);
+		} catch (Exception e) {
+			Map<String, Object> errorResponse = new java.util.LinkedHashMap<>();
+			errorResponse.put("error", "Model selection failed: " + e.getMessage());
+			errorResponse.put("suggestion", "Check if Ollama is running and the model exists");
+			return ResponseEntity.internalServerError().body(errorResponse);
+		}
+	}
+
+	@Operation(
+		summary = "Get Current Configuration", 
+		description = "Shows currently connected server and selected Ollama model.")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200", description = "Configuration retrieved")
+	})
+	@GetMapping("/status")
+	public ResponseEntity<Map<String, Object>> getStatus() {
+		return ResponseEntity.ok(clientService.getChatInfo());
 	}
 }

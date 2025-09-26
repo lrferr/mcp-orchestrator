@@ -80,6 +80,8 @@ Envia um prompt ao servidor conectado.
 - **`GET /api/mcp/ollama/models`** - Lista modelos disponíveis no Ollama
 - **`GET /api/mcp/ollama/models/{modelName}`** - Detalhes de modelo específico
 - **`GET /api/mcp/ollama/test-connection`** - Testa conexão com Ollama
+- **`POST /api/mcp/ollama/select-model`** - Seleciona modelo para uso nas queries
+- **`GET /api/mcp/status`** - Verifica configuração atual (servidor conectado + modelo)
 
 *Ver `docs/API_EXAMPLES.md` para exemplos completos de uso*
 

@@ -2,3 +2,23 @@
 {"level":"info","message":"Configuração carregada da variável de ambiente MYSQL_CONNECTIONS","service":"mysql-mcp","timestamp":"2025-09-26 16:08:23"}
 {"level":"info","message":"Conexões disponíveis: sigareplica","service":"mysql-mcp","timestamp":"2025-09-26 16:08:23"}
 {"level":"info","message":"Conexão padrão: sigareplica","service":"mysql-mcp","timestamp":"2025-09-26 16:08:23"}
+{"level":"info","message":"Servidor MCP MySQL iniciado com sucesso!","service":"mysql-mcp","timestamp":"2025-09-26 18:31:03"}
+{"level":"info","message":"Configuração carregada da variável de ambiente MYSQL_CONNECTIONS","service":"mysql-mcp","timestamp":"2025-09-26 18:31:03"}
+{"level":"info","message":"Conexões disponíveis: sigareplica","service":"mysql-mcp","timestamp":"2025-09-26 18:31:03"}
+{"level":"info","message":"Conexão padrão: sigareplica","service":"mysql-mcp","timestamp":"2025-09-26 18:31:03"}
+{"level":"info","message":"Servidor MCP MySQL iniciado com sucesso!","service":"mysql-mcp","timestamp":"2025-09-26 18:46:46"}
+{"level":"info","message":"Configuração carregada da variável de ambiente MYSQL_CONNECTIONS","service":"mysql-mcp","timestamp":"2025-09-26 18:46:46"}
+{"level":"info","message":"Conexões disponíveis: sigareplica","service":"mysql-mcp","timestamp":"2025-09-26 18:46:46"}
+{"level":"info","message":"Conexão padrão: sigareplica","service":"mysql-mcp","timestamp":"2025-09-26 18:46:46"}
+{"level":"info","message":"Servidor MCP MySQL iniciado com sucesso!","service":"mysql-mcp","timestamp":"2025-09-26 18:52:47"}
+{"level":"info","message":"Configuração carregada da variável de ambiente MYSQL_CONNECTIONS","service":"mysql-mcp","timestamp":"2025-09-26 18:52:47"}
+{"level":"info","message":"Conexões disponíveis: sigareplica","service":"mysql-mcp","timestamp":"2025-09-26 18:52:47"}
+{"level":"info","message":"Conexão padrão: sigareplica","service":"mysql-mcp","timestamp":"2025-09-26 18:52:47"}
+{"level":"info","message":"Servidor MCP MySQL iniciado com sucesso!","service":"mysql-mcp","timestamp":"2025-09-26 19:05:36"}
+{"level":"info","message":"Configuração carregada da variável de ambiente MYSQL_CONNECTIONS","service":"mysql-mcp","timestamp":"2025-09-26 19:05:36"}
+{"level":"info","message":"Conexões disponíveis: sigareplica","service":"mysql-mcp","timestamp":"2025-09-26 19:05:36"}
+{"level":"info","message":"Conexão padrão: sigareplica","service":"mysql-mcp","timestamp":"2025-09-26 19:05:36"}
+{"level":"info","message":"Servidor MCP MySQL iniciado com sucesso!","service":"mysql-mcp","timestamp":"2025-09-26 19:22:45"}
+{"level":"info","message":"Configuração carregada da variável de ambiente MYSQL_CONNECTIONS","service":"mysql-mcp","timestamp":"2025-09-26 19:22:45"}
+{"level":"info","message":"Conexões disponíveis: sigareplica","service":"mysql-mcp","timestamp":"2025-09-26 19:22:45"}
+{"level":"info","message":"Conexão padrão: sigareplica","service":"mysql-mcp","timestamp":"2025-09-26 19:22:45"}

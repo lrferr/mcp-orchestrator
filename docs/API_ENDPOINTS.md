@@ -256,6 +256,57 @@ GET /api/mcp/ollama/models/llama3:latest
 
 ---
 
+### 9. **Select Model**
+
+**Endpoint:** `POST /api/mcp/ollama/select-model`
+
+**Description:** Choose which Ollama model to use for queries. Check available models via /ollama/models first.
+
+**Query Parameters:**
+- `modelName`: Model name to select (e.g. llama3:latest, mistral:7b)
+
+**Request Example:**
+```bash
+POST /api/mcp/ollama/select-model?modelName=llama3:latest
+```
+
+**Response Example:**
+```json
+{
+  "message": "Model selected successfully",
+  "selectedModel": "llama3:latest",
+  "connectedServer": "oracle-monitor"
+}
+```
+
+---
+
+### 10. **Get Current Configuration**
+
+**Endpoint:** `GET /api/mcp/status`
+
+**Description:** Shows currently connected server and selected Ollama model configuration.
+
+**Response Example:**
+```json
+{
+  "connectedServer": "oracle-monitor",
+  "model": "llama3:latest",
+  "type": "ollama"
+}
+```
+
+**Response Example (No Connection):**
+```json
+{
+  "connectedServer": null,
+  "model": "llama3:latest",
+  "type": "ollama"
+}
+```
+
+---
+
 ## Error Handling
 
 ### Common Error Responses
@@ -388,17 +439,27 @@ http://localhost:8080/v3/api-docs
    GET /api/mcp/ollama/models
    ```
 
-3. **Start MCP Servers:**
+3. **Select a Specific Model:**
+   ```bash
+   POST /api/mcp/ollama/select-model?modelName=llama3:latest
+   ```
+
+4. **Start MCP Servers:**
    ```bash
    POST /api/mcp/start
    ```
 
-4. **Connect to a Server:**
+5. **Connect to a Server:**
    ```bash
    POST /api/mcp/oracle-monitor/connect
    ```
 
-5. **Query the Connected Server:**
+6. **Check Current Configuration:**
+   ```bash
+   GET /api/mcp/status
+   ```
+
+7. **Query the Connected Server with Selected Model:**
    ```bash
    POST /api/mcp/query?prompt=Check database status
    ```

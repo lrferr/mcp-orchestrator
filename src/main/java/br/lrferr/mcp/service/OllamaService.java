@@ -128,12 +128,18 @@ public class OllamaService {
     public Map<String, Object> testConnection() {
         try {
             String url = baseUrl + "/api/tags";
-            restTemplate.getForObject(URI.create(url), String.class);
+            String response = restTemplate.getForObject(URI.create(url), String.class);
+            
+            JsonNode root = objectMapper.readTree(response);
+            JsonNode models = root.get("models");
+            
+            int modelCount = (models != null && models.isArray()) ? models.size() : 0;
             
             return Map.of(
                 "status", "SUCCESS",
                 "baseUrl", baseUrl,
-                "message", "Connection to Ollama successful"
+                "message", "Connection to Ollama successful",
+                "availableModels", modelCount
             );
         } catch (Exception e) {
             log.error("Failed to connect to Ollama", e);
@@ -142,6 +148,20 @@ public class OllamaService {
                 "baseUrl", baseUrl,
                 "message", "Failed to connect to Ollama: " + e.getMessage()
             );
+        }
+    }
+
+    /**
+     * Verify that a specific model exists and is available
+     */
+    public boolean isModelAvailable(String modelName) {
+        try {
+            List<Map<String, Object>> models = listModels();
+            return models.stream()
+                .anyMatch(model -> modelName.equals(model.get("name")));
+        } catch (Exception e) {
+            log.error("Failed to check model availability for: {}", modelName, e);
+            return false;
         }
     }
 }
