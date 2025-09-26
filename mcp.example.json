@@ -1,0 +1,27 @@
+{
+    "mcpServers": {
+      "oracle-monitor": {
+        "command": "node",
+        "args": [
+          "./servers/oracle-monitor/index.js"
+        ],
+        "env": {
+          "NODE_ENV": "production",
+          "ORACLE_CONN": "oracle://user:pass@localhost:1521/xe"
+        },
+        "workingDirectory": "./"
+      },
+      "mysql-monitor": {
+        "command": "node",
+        "args": [
+          "./servers/mysql-monitor/index.js"
+        ],
+        "env": {
+          "NODE_ENV": "production",
+          "MYSQL_CONN": "mysql://user:pass@localhost:3306/db"
+        },
+        "workingDirectory": "./"
+      }
+    }
+  }
+  
