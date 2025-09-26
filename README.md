@@ -34,18 +34,49 @@ Default config file path comes from `mcp.config.path` (see `application.properti
 }
 ```
 
-## CLI Commands
+## REST API + Swagger UI
 
-- `mcp-start --file <config>` – load and start all servers from JSON (defaults to `mcp.config.path`).
-- `mcp-list` – show loaded servers and running status (PID for running processes).
-- `mcp-stop <name>` – stop a running server.
-- `mcp-connect <name>` – select a running server for interaction.
-- `query "<prompt>"` – send text to connected server (stubbed response for now).
+### Iniciar a aplicação:
+```bash
+java -jar target/mcp-orchestrator-0.0.1-SNAPSHOT.jar
+```
 
-## REST + Swagger UI
+A aplicação estará disponível em:
+- **API Base**: http://localhost:8080/api/mcp
+- **Swagger UI**: http://localhost:8080/swagger-ui.html
 
-- REST endpoints live under `/api/mcp/**` (see `src/main/java/br/lrferr/mcp/controller/McpServerController`).
-- Swagger UI available at `/swagger-ui.html`; OpenAPI JSON at `/v3/api-docs`.
+### Endpoints Disponíveis:
+
+#### `POST /api/mcp/start`
+Inicia todos os servidores MCP carregando configuração do arquivo JSON.
+- **Parâmetros opcionais**: `file` (caminho do arquivo JSON)
+- **Resposta**: lista de servidores iniciados com status
+
+#### `GET /api/mcp/list` 
+Lista servidores conhecidos e seus estados.
+- **Resposta**: servidores carregados com status RUNNING/STOPPED e PID
+
+#### `DELETE /api/mcp/{serverName}`
+Para um servidor específico.
+- **Parâmetros**: `serverName` - nome do servidor
+- **Resposta**: confirmação da parada
+
+#### `POST /api/mcp/{serverName}/connect`
+Conecta a um servidor rodando para interação.
+- **Parâmetros**: `serverName` - nome do servidor
+- **Resposta**: confirmação da conexão e PID
+
+#### `POST /api/mcp/query`
+Envia um prompt ao servidor conectado.
+- **Parâmetros**: `prompt` - texto da consulta
+- **Resposta**: resposta do servidor MCP
+
+---
+
+**Swagger UI Web Interface**
+- Documentação interativa e testes de API disponível em:
+- **http://localhost:8080/swagger-ui.html**
+- **OpenAPI JSON espectro em: http://localhost:8080/v3/api-docs**
 - Start the application (`./mvnw spring-boot:run`) and open Swagger UI to explore/start/stop/list MCP servers.
 
 ## Architecture
