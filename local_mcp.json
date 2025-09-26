@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "ollama-local": {
+      "command": "ollama",
+      "args": ["serve"],
+      "env": {
+        "OLLAMA_MODELS": "./models"
+      }
+    }
+  }
+}
