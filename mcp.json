@@ -1,25 +1,26 @@
 {
   "mcpServers": {
     "oracle-monitor": {
-      "command": "node",
-      "args": [
-        "./servers/oracle-monitor/index.js"
-      ],
-      "env": {
-        "NODE_ENV": "production",
-        "ORACLE_CONN": "oracle://user:pass@localhost:1521/xe"
-      },
+		  "command": "C:\\nvm4w\\nodejs\\node.exe",
+		  "args": ["C:\\Users\\ufpr\\git\\mcp\\oracle_node_mcp\\src\\index.js"],		  
+		  "env": {
+			"MCP_SERVER_NAME": "oracle-monitor",
+			"MCP_SERVER_VERSION": "1.0.0",
+			"LOG_LEVEL": "info",
+			"ORACLE_CLIENT_PATH": "C:\\oracle\\instantclient_21_8\\instantclient_21_8",
+			"ORACLE_CONNECTIONS": "{\"connections\":{\"hml\":{\"user\":\"leandro\",\"password\":\"l220185215dtamta#\",\"connectString\":\"aikanahml.cce.ufpr.br:1521/hml01\",\"description\":\"Homologa Database\"},\"prod\":{\"user\":\"leandroferreira\",\"password\":\"l220185215DtaMta$#\",\"connectString\":\"aikana.cce.ufpr.br:1529/ufpr01\",\"description\":\"Production Database\"}},\"defaultConnection\":\"hml\"}"
+		  },
       "workingDirectory": "./"
     },
     "mysql-monitor": {
-      "command": "node",
-      "args": [
-        "./servers/mysql-monitor/index.js"
-      ],
-      "env": {
-        "NODE_ENV": "production",
-        "MYSQL_CONN": "mysql://user:pass@localhost:3306/db"
-      },
+		  "command": "C:\\nvm4w\\nodejs\\node.exe",
+		  "args": ["C:\\Users\\ufpr\\git\\mcp\\mysql_mcp_server\\src\\index.js"],
+		  "env": {
+			"MCP_SERVER_NAME": "mysql-monitor-git",
+			"MCP_SERVER_VERSION": "1.1.7",
+			"LOG_LEVEL": "info",
+			"MYSQL_CONNECTIONS": "{\"connections\":{\"sigareplica\":{\"host\":\"10.200.110.10\",\"port\":3306,\"user\":\"sigareplica\",\"password\":\"SMJHmFhJgAf4q81EoDPb\",\"database\":\"mysql\"}},\"defaultConnection\":\"sigareplica\"}"
+		  },
       "workingDirectory": "./"
     }
   }

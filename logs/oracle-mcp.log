@@ -1,0 +1,4 @@
+{"level":"info","message":"Servidor MCP Oracle iniciado com sucesso!","service":"oracle-mcp","timestamp":"2025-09-26 16:08:23"}
+{"level":"info","message":"Configuração de múltiplas conexões carregada das variáveis de ambiente","service":"oracle-mcp","timestamp":"2025-09-26 16:08:23"}
+{"level":"info","message":"Tentando inicializar Oracle Client com: C:\\oracle\\instantclient_21_8\\instantclient_21_8","service":"oracle-mcp","timestamp":"2025-09-26 16:08:23"}
+{"level":"info","message":"Oracle Client inicializado com sucesso em modo Thick: C:\\oracle\\instantclient_21_8\\instantclient_21_8","service":"oracle-mcp","timestamp":"2025-09-26 16:08:23"}

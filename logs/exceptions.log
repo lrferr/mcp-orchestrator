@@ -1,0 +1,4 @@
+{"level":"info","message":"Servidor MCP MySQL iniciado com sucesso!","service":"mysql-mcp","timestamp":"2025-09-26 16:08:23"}
+{"level":"info","message":"Configuração carregada da variável de ambiente MYSQL_CONNECTIONS","service":"mysql-mcp","timestamp":"2025-09-26 16:08:23"}
+{"level":"info","message":"Conexões disponíveis: sigareplica","service":"mysql-mcp","timestamp":"2025-09-26 16:08:23"}
+{"level":"info","message":"Conexão padrão: sigareplica","service":"mysql-mcp","timestamp":"2025-09-26 16:08:23"}

@@ -45,6 +45,11 @@ A aplicação estará disponível em:
 - **API Base**: http://localhost:8080/api/mcp
 - **Swagger UI**: http://localhost:8080/swagger-ui.html
 
+### Documentation:
+- **Complete API Reference**: [docs/API_ENDPOINTS.md](docs/API_ENDPOINTS.md) *(Recommended)*
+- **Ollama Integration Examples**: [docs/API_EXAMPLES.md](docs/API_EXAMPLES.md)
+- **Help**: [docs/HELP.md](docs/HELP.md)
+
 ### Endpoints Disponíveis:
 
 #### `POST /api/mcp/start`
@@ -69,7 +74,14 @@ Conecta a um servidor rodando para interação.
 #### `POST /api/mcp/query`
 Envia um prompt ao servidor conectado.
 - **Parâmetros**: `prompt` - texto da consulta
-- **Resposta**: resposta do servidor MCP
+- **Resposta**: resposta do servidor MCP via Ollama
+
+#### Ollama Integration Endpoints:
+- **`GET /api/mcp/ollama/models`** - Lista modelos disponíveis no Ollama
+- **`GET /api/mcp/ollama/models/{modelName}`** - Detalhes de modelo específico
+- **`GET /api/mcp/ollama/test-connection`** - Testa conexão com Ollama
+
+*Ver `docs/API_EXAMPLES.md` para exemplos completos de uso*
 
 ---
 
